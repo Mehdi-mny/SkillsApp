@@ -15,6 +15,7 @@
         android:layout_width="184dp"
         android:layout_height="129dp"
         android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="12dp"
         android:contentDescription="@string/desc"
         android:scaleType="centerCrop"
         app:srcCompat="@drawable/skills_nobg" />
@@ -23,40 +24,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="24dp"
-        android:text="@string/create_account"
+        android:layout_marginBottom="24dp"
+        android:layout_marginTop="74dp"
+        android:text="@string/login"
         android:textSize="24sp"
         android:textStyle="bold" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="@string/already_registered" />
-
-
-    <!-- Lien "log in here" -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:onClick="onLoginClicked"
-        android:text="@string/log_in_here"
-        android:textColor="@color/purple"
-        android:textStyle="bold" />
-
-    <!-- Champ de saisie pour le nom -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/nom"
-        android:textSize="16sp" />
-
-    <EditText
-        android:id="@+id/editTextName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/entrez_votre_nom" />
 
     <!-- Champ de saisie pour l'e-mail -->
     <TextView
@@ -88,36 +61,6 @@
         android:hint="@string/entrez_votre_mot_de_passe"
         android:inputType="textPassword" />
 
-    <!-- Champ de saisie pour le numéro de téléphone -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/num_ro_de_t_l_phone"
-        android:textSize="16sp" />
-
-    <EditText
-        android:id="@+id/editTextPhone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/entrez_votre_num_ro_de_t_l_phone"
-        android:inputType="phone" />
-
-    <!-- Champ de saisie pour la date de naissance -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/date_de_naissance"
-        android:textSize="16sp" />
-
-    <EditText
-        android:id="@+id/editTextDOB"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/entrez_votre_date_de_naissance"
-        android:inputType="date" />
-
     <!-- Bouton de validation -->
     <Button
         android:id="@+id/buttonSubmit"
@@ -126,8 +69,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="24dp"
         android:backgroundTint="#1A123B"
-        android:text="@string/valider"
-        android:textColor="@color/white"
-        android:onClick="onSubmitButtonClick"/>
+        android:text="@string/login"
+        android:textColor="@color/white" />
 
 </LinearLayout>

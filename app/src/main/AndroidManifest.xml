@@ -26,13 +26,14 @@
             android:exported="false">
 
         </activity>
+
         <activity
-            android:name=".HomeActivity"
+            android:name=".create_account_activity"
             android:exported="false">
 
         </activity>
         <activity
-            android:name=".create_account_activity"
+            android:name=".HomeActivity"
             android:exported="false">
 
         </activity>

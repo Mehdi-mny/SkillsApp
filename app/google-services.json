@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "567805050385",
+    "project_id": "skillsapp-d684c",
+    "storage_bucket": "skillsapp-d684c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:567805050385:android:dbc972287129322994bbb0",
+        "android_client_info": {
+          "package_name": "com.example.skillsapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyASCSP_S7KP6nu-cIX9H_Yw9x1cQ6xrTN4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
