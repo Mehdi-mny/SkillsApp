@@ -1,0 +1,16 @@
+<!-- edittext_border.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:shape="rectangle"
+    tools:ignore="ExtraText">
+    <solid android:color="@android:color/transparent" />
+    <stroke
+        android:width="2dp"
+        android:color="#1A123B" /> <!-- Adjust the border color as needed -->
+    <corners android:radius="30dp" /> <!-- Adjust the border radius as needed -->
+    <padding
+        android:left="5dp"
+        android:right="5dp"
+        android:top="5dp"
+        android:bottom="5dp" />
+</shape>

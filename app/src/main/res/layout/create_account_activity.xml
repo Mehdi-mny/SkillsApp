@@ -56,7 +56,8 @@
         android:id="@+id/editTextName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/entrez_votre_nom" />
+        android:hint="@string/entrez_votre_nom"
+        android:background="@drawable/border"/>
 
     <!-- Champ de saisie pour l'e-mail -->
     <TextView
@@ -71,7 +72,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/entrez_votre_e_mail"
-        android:inputType="textEmailAddress" />
+        android:inputType="textEmailAddress"
+        android:background="@drawable/border"/>
 
     <!-- Champ de saisie pour le mot de passe -->
     <TextView
@@ -86,7 +88,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/entrez_votre_mot_de_passe"
-        android:inputType="textPassword" />
+        android:inputType="textPassword"
+        android:background="@drawable/border"/>
 
     <!-- Champ de saisie pour le numéro de téléphone -->
     <TextView
@@ -101,7 +104,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/entrez_votre_num_ro_de_t_l_phone"
-        android:inputType="phone" />
+        android:inputType="phone"
+        android:background="@drawable/border"/>
 
     <!-- Champ de saisie pour la date de naissance -->
     <TextView
@@ -116,7 +120,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/entrez_votre_date_de_naissance"
-        android:inputType="date" />
+        android:inputType="date"
+        android:background="@drawable/border"/>
 
     <!-- Bouton de validation -->
     <Button
