@@ -7,6 +7,7 @@ android {
     namespace = "com.example.skillsapp"
     compileSdk = 34
 
+
     defaultConfig {
         applicationId = "com.example.skillsapp"
         minSdk = 29
@@ -26,6 +27,7 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
+
     }
 }
 
@@ -36,9 +38,11 @@ dependencies {
     implementation(libs.activity)
     implementation(libs.constraintlayout)
     implementation(libs.coordinatorlayout)
+    implementation(libs.firebase.database)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+    implementation ("com.google.firebase:firebase-admin:1.32.0")
     implementation(platform("com.google.firebase:firebase-bom:32.8.1"))
     implementation("com.google.firebase:firebase-analytics")    // Add the dependency for the Firebase Authentication library
     implementation("com.google.firebase:firebase-auth")

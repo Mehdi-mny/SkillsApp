@@ -40,6 +40,7 @@
                 android:paddingStart="100dp"
                 android:layout_marginTop="15dp"
                 android:src="@drawable/icon"
+                android:onClick="ProfileButton"
                 android:contentDescription="@string/icon" />
 
         </LinearLayout>

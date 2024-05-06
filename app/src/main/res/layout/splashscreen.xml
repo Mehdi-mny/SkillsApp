@@ -17,6 +17,7 @@
         android:adjustViewBounds="false"
         android:contentDescription="@string/description"
         android:cropToPadding="false"
+        android:src="@drawable/skills_nobg"
          />
 
     <ProgressBar

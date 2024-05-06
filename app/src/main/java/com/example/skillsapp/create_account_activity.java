@@ -1,6 +1,7 @@
 package com.example.skillsapp;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -51,6 +52,9 @@ public class create_account_activity extends Activity {
     }
     private void updateUI(FirebaseUser user) {
         // Code to update UI after authentication
+        Intent intent = new Intent(create_account_activity.this,HomeActivity.class);
+        startActivity(intent);
+        finish();
     }
     public void createUserWithEmailAndPassword(String email, String password) {
         mAuth.createUserWithEmailAndPassword(email, password)

@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
-    tools:context=".create_account_activity"
+    tools:context=".Login"
     >
 
     <!-- Titre -->
@@ -19,7 +19,7 @@
         android:layout_marginBottom="12dp"
         android:contentDescription="@string/desc"
         android:scaleType="centerCrop"
-        app:srcCompat="@drawable/skills_nobg" />
+        android:src="@drawable/skills_nobg" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -76,6 +76,7 @@
         android:layout_marginTop="24dp"
         android:backgroundTint="#1A123B"
         android:text="@string/login"
-        android:textColor="@color/white" />
+        android:textColor="@color/white"
+        android:onClick="onSubmitButtonClick"/>
 
 </LinearLayout>
