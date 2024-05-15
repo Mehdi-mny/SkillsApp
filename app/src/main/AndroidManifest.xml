@@ -46,7 +46,10 @@
         <activity
             android:name=".Profile"
             android:exported="false">
-
+        </activity>
+        <activity
+            android:name=".CompetenceActivity"
+            android:exported="false">
         </activity>
     </application>
 

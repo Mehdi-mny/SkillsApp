@@ -1,63 +1,52 @@
 package com.example.skillsapp;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.util.Log;
+import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.annotations.NotNull;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class CompetenceActivity extends Activity {
-    DatabaseReference Mref;
-    ListView mylistview;
-    ArrayList<String> myArrayList = new ArrayList<>();
 
+    private static final String TAG = "CompetenceActivity";
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.competence);
-        ArrayAdapter<String> myArrayAdapter = new ArrayAdapter<String>(CompetenceActivity.this, android.R.layout.simple_list_item_1,myArrayList);
-        mylistview = (ListView) findViewById(R.id.listview1);
-        mylistview.setAdapter(myArrayAdapter);
-        Mref = FirebaseDatabase.getInstance().getReference();
-        Mref.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot Snapshot, @Nullable String previousChildName) {
+    }
 
-                String value = Snapshot.getValue(String.class);
-                myArrayAdapter.add(value);
-                myArrayAdapter.notifyDataSetChanged();
+    public void addCompetence(View view) {
+        Map<String, Object> category = new HashMap<>();
+        category.put("2", "data engineer");
+
+        Log.d(TAG, category.toString());
+
+        db.collection("Category").add(category)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+            @Override
+            public void onSuccess(DocumentReference documentReference) {
+                Toast.makeText(CompetenceActivity.this,"Successful",Toast.LENGTH_SHORT).show();
             }
-
+        }).addOnFailureListener(new OnFailureListener() {
             @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                myArrayAdapter.notifyDataSetChanged();
-            }
+            public void onFailure(@NonNull @NotNull Exception e) {
 
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+                Toast.makeText(CompetenceActivity.this,"Failed",Toast.LENGTH_SHORT).show();
 
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });
