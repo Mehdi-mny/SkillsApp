@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".AddCompetenceActivity">
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="184dp"
+        android:layout_height="129dp"
+        android:layout_gravity="center_horizontal"
+        android:contentDescription="@string/desc"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/skills_nobg" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ajouter une Compétence"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:paddingBottom="16dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/nom"
+        android:textSize="22sp" />
+    <EditText
+        android:id="@+id/competence_name"
+        android:layout_width="match_parent"
+        android:layout_height="67dp"
+        android:hint="Nom de la Compétence"
+        android:inputType="textPersonName"
+        android:padding="12dp"
+        android:background="@drawable/border"/>/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Description"
+        android:textSize="22sp" />
+    <EditText
+        android:id="@+id/competence_description"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:gravity="top"
+        android:hint="Description de la competence"
+        android:inputType="textMultiLine"
+        android:minHeight="100dp"
+        android:padding="12dp"
+        android:background="@drawable/border"/>/>
+
+
+    <Button
+        android:id="@+id/addcompetence"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="24dp"
+        android:backgroundTint="#1A123B"
+        android:text="ADD"
+        android:textColor="@color/white"
+        android:onClick="addCompetenceButtonClick"/>
+
+</LinearLayout>

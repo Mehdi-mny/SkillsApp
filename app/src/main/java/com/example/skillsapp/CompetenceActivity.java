@@ -1,6 +1,7 @@
 package com.example.skillsapp;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -19,10 +20,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CompetenceActivity extends Activity {
-
-    private static final String TAG = "CompetenceActivity";
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,25 +27,8 @@ public class CompetenceActivity extends Activity {
     }
 
     public void addCompetence(View view) {
-        Map<String, Object> category = new HashMap<>();
-        category.put("2", "data engineer");
-
-        Log.d(TAG, category.toString());
-
-        db.collection("Category").add(category)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-            @Override
-            public void onSuccess(DocumentReference documentReference) {
-                Toast.makeText(CompetenceActivity.this,"Successful",Toast.LENGTH_SHORT).show();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull @NotNull Exception e) {
-
-                Toast.makeText(CompetenceActivity.this,"Failed",Toast.LENGTH_SHORT).show();
-
-
-            }
-        });
+        Intent intent = new Intent(CompetenceActivity.this,AddCompetenceActivity.class);
+        startActivity(intent);
+        finish();
     }
 }
