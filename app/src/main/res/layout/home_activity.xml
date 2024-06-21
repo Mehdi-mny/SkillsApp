@@ -44,6 +44,12 @@
                 android:contentDescription="@string/icon" />
 
         </LinearLayout>
+        <SearchView
+            android:id="@+id/searchView"
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:queryHint="Search users" />
     </LinearLayout>
 
 

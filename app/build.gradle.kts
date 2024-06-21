@@ -46,4 +46,8 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:32.8.1"))
     implementation("com.google.firebase:firebase-analytics")    // Add the dependency for the Firebase Authentication library
     implementation("com.google.firebase:firebase-auth")
+    implementation ("com.google.firebase:firebase-messaging")
+    implementation ("androidx.recyclerview:recyclerview:1.2.1")
+
+
 }

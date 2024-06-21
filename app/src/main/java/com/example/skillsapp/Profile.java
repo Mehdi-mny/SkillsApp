@@ -19,4 +19,12 @@ public class Profile extends Activity {
         startActivity(intent);
         finish();
     }
+
+    public void envoyermessage(View view) {
+        Intent intent = new Intent(Profile.this, MessagingActivity.class);
+        intent.putExtra("RECIPIENT_ID", "NHfqSusuSIZ4cn2Eg4FZqWpKUqd2");
+        intent.putExtra("RECIPIENT_NAME", "test");
+        startActivity(intent);
+
+    }
 }

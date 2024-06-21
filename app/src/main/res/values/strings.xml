@@ -35,4 +35,12 @@
     <string name="categories">Categories</string>
     <string name="business">Business</string>
     <string name="top_rated">Top rated</string>
+    <string name="competences">competences</string>
+    <string name="ajouter_une_competence">Ajouter une competence</string>
+    <string name="titre">titre</string>
+    <string name="description_competence">description_competence</string>
+    <string name="creer_un_compte">creer un compte</string>
+    <string name="envoyer">envoyer</string>
+    <string name="type_your_message">Type your message...</string>
+    <string name="message">message</string>
 </resources>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="16dp">
+
+    <!-- User Image -->
+    <ImageView
+        android:id="@+id/imageUser"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/skills_nobg" />
+
+    <!-- Vertical Layout for User Information -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:orientation="vertical">
+
+        <!-- User Name -->
+        <TextView
+            android:id="@+id/textUserName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="User Name"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+
+        <!-- Domain of Expertise -->
+        <TextView
+            android:id="@+id/textDomain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Domain"
+            android:textColor="@color/black"
+            android:textSize="14sp" />
+
+        <!-- Description -->
+        <TextView
+            android:id="@+id/textDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="User Description"
+            android:textColor="@color/black"
+            android:textSize="14sp" />
+
+        <!-- Rating -->
+        <RatingBar
+            android:id="@+id/ratingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:numStars="5"
+            android:rating="3.5"
+            android:stepSize="1" />
+    </LinearLayout>
+</LinearLayout>

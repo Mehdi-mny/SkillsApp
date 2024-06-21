@@ -51,7 +51,7 @@ public class Login extends Activity {
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
                             Toast.makeText(Login.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
-                            updateUI(null);
+
                         }
                     }
 
@@ -81,5 +81,11 @@ public class Login extends Activity {
 
         // Appeler la méthode createUserWithEmailAndPassword avec les valeurs récupérées
         signInWithEmailAndPassword(email, password);
+    }
+
+    public void onCreateAccountClick(View view) {
+        Intent intent = new Intent(Login.this,create_account_activity.class);
+        startActivity(intent);
+        finish();
     }
 }
