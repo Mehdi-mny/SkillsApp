@@ -1,5 +1,6 @@
 package com.example.skillsapp;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,13 +10,14 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
-
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder> {
 
     private List<User> userList;
+    private Context context;
 
-    public UserAdapter(List<User> userList) {
+    public UserAdapter(List<User> userList, Context context) {
         this.userList = userList;
+        this.context = context;
     }
 
     @NonNull
@@ -28,12 +30,10 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
     @Override
     public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
         User user = userList.get(position);
-        holder.userName.setText(user.getName());
-        holder.userDomain.setText(user.getDomain());
-        holder.userDescription.setText(user.getDescription());
-        holder.userRating.setRating(user.getRating());
-        // You can set the user image here if available
-        // holder.userImage.setImageResource(user.getImageResId());
+        holder.textViewName.setText(user.getName());
+        holder.textViewEmail.setText(user.getEmail());
+        holder.textViewPhone.setText(user.getPhone());
+        holder.textViewDob.setText(user.getDob());
     }
 
     @Override
@@ -41,21 +41,15 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         return userList.size();
     }
 
-    static class UserViewHolder extends RecyclerView.ViewHolder {
+    public class UserViewHolder extends RecyclerView.ViewHolder {
+        public TextView textViewName, textViewEmail, textViewPhone, textViewDob;
 
-        ImageView userImage;
-        TextView userName;
-        TextView userDomain;
-        TextView userDescription;
-        RatingBar userRating;
-
-        public UserViewHolder(@NonNull View itemView) {
+        public UserViewHolder(View itemView) {
             super(itemView);
-            userImage = itemView.findViewById(R.id.imageUser);
-            userName = itemView.findViewById(R.id.textUserName);
-            userDomain = itemView.findViewById(R.id.textDomain);
-            userDescription = itemView.findViewById(R.id.textDescription);
-            userRating = itemView.findViewById(R.id.ratingBar);
+            textViewName = itemView.findViewById(R.id.textViewName);
+            textViewEmail = itemView.findViewById(R.id.textViewEmail);
+            textViewPhone = itemView.findViewById(R.id.textViewPhone);
+            textViewDob = itemView.findViewById(R.id.textViewDob);
         }
     }
 }
