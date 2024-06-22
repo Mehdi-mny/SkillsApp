@@ -1,30 +1,34 @@
 package com.example.skillsapp;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javax.annotation.Nullable;
 
 public class MessagingActivity extends AppCompatActivity {
 
@@ -35,6 +39,10 @@ public class MessagingActivity extends AppCompatActivity {
     private MessageAdapter messageAdapter;
     private List<Message> messageList;
 
+    private String userId; // ID de l'utilisateur actuel
+    private String recipientId;
+    String userName;// ID du destinataire avec qui l'utilisateur chatte
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,7 +51,6 @@ public class MessagingActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
-        TextView textViewUserName = findViewById(R.id.textViewUserName);
         editTextMessage = findViewById(R.id.editTextMessage);
         recyclerViewMessages = findViewById(R.id.recyclerViewMessages);
 
@@ -52,13 +59,27 @@ public class MessagingActivity extends AppCompatActivity {
         recyclerViewMessages.setLayoutManager(new LinearLayoutManager(this));
         recyclerViewMessages.setAdapter(messageAdapter);
 
-        // Set the user name
-        String userName = getIntent().getStringExtra("USER_NAME");
-        textViewUserName.setText(userName);
+        // Récupérer l'utilisateur actuel
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser == null) {
+            Toast.makeText(this, "User not authenticated", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
+        userId = currentUser.getUid();
 
-        // Load messages
+        // Récupérer les informations du destinataire de l'intent
+        recipientId = getIntent().getStringExtra("RECIPIENT_ID");
+        String recipientName = getIntent().getStringExtra("RECIPIENT_NAME");
+
+        // Afficher le nom du destinataire
+        TextView textViewUserName = findViewById(R.id.textViewUserName);
+        textViewUserName.setText(recipientName);
+
+        // Charger les messages
         loadMessages();
 
+        // Gérer l'envoi de messages
         findViewById(R.id.buttonSend).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,16 +89,36 @@ public class MessagingActivity extends AppCompatActivity {
     }
 
     private void loadMessages() {
-        String recipientId = getIntent().getStringExtra("RECIPIENT_ID");
-
         db.collection("messages")
+                .whereEqualTo("userId", userId)
                 .whereEqualTo("recipientId", recipientId)
                 .orderBy("timestamp")
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                .addSnapshotListener(this, new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                         if (e != null) {
-                            Toast.makeText(MessagingActivity.this, "Error while loading messages", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+
+                        for (DocumentChange dc : queryDocumentSnapshots.getDocumentChanges()) {
+                            if (dc.getType() == DocumentChange.Type.ADDED) {
+                                Message message = dc.getDocument().toObject(Message.class);
+                                messageList.add(message);
+                                messageAdapter.notifyItemInserted(messageList.size() - 1);
+                                recyclerViewMessages.scrollToPosition(messageList.size() - 1);
+                            }
+                        }
+                    }
+                });
+
+        db.collection("messages")
+                .whereEqualTo("recipientId", userId)
+                .whereEqualTo("userId", recipientId)
+                .orderBy("timestamp")
+                .addSnapshotListener(this, new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
                             return;
                         }
 
@@ -94,7 +135,6 @@ public class MessagingActivity extends AppCompatActivity {
     }
 
 
-
     private void sendMessage() {
         String messageText = editTextMessage.getText().toString().trim();
         if (messageText.isEmpty()) {
@@ -104,33 +144,49 @@ public class MessagingActivity extends AppCompatActivity {
 
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser == null) {
-            Toast.makeText(this, "Not authenticated", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "User not authenticated", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        String userId = currentUser.getUid();
-        String userName = currentUser.getDisplayName();
-        String recipientId = getIntent().getStringExtra("RECIPIENT_ID");
-        String recipientName = getIntent().getStringExtra("RECIPIENT_NAME");
-
-        Map<String, Object> message = new HashMap<>();
-        message.put("userId", userId);
-        message.put("userName", userName);
-        message.put("recipientId", recipientId);
-        message.put("recipientName", recipientName);
-        message.put("message", messageText);
-        message.put("timestamp", System.currentTimeMillis());
-
-
-        db.collection("messages")
-                .add(message)
-                .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+        db.collection("users").document(userId).get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
-                    public void onComplete(@NonNull Task<DocumentReference> task) {
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         if (task.isSuccessful()) {
-                            editTextMessage.setText("");
+                            DocumentSnapshot document = task.getResult();
+                            if (document.exists()) {
+                                userName = document.getString("name");
+                                if (userName == null || userName.isEmpty()) {
+                                    Toast.makeText(MessagingActivity.this, "Failed to retrieve username", Toast.LENGTH_SHORT).show();
+                                    return;
+                                }
+
+                                String recipientName = getIntent().getStringExtra("RECIPIENT_NAME");
+
+                                Message message = new Message(userId, userName, recipientId, recipientName, messageText, System.currentTimeMillis());
+
+                                db.collection("messages")
+                                        .add(message)
+                                        .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<DocumentReference> task) {
+                                                if (task.isSuccessful()) {
+                                                    editTextMessage.setText("");
+
+                                                    // Ajouter le message à la liste locale et notifier l'adaptateur
+                                                    messageList.add(message);
+                                                    messageAdapter.notifyItemInserted(messageList.size() - 1);
+                                                    recyclerViewMessages.scrollToPosition(messageList.size() - 1);
+                                                } else {
+                                                    Toast.makeText(MessagingActivity.this, "Failed to send message", Toast.LENGTH_SHORT).show();
+                                                }
+                                            }
+                                        });
+                            } else {
+                                Toast.makeText(MessagingActivity.this, "User document does not exist", Toast.LENGTH_SHORT).show();
+                            }
                         } else {
-                            Toast.makeText(MessagingActivity.this, "Failed to send message", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MessagingActivity.this, "Failed to retrieve user document", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

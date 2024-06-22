@@ -65,6 +65,10 @@
             android:name=".MessagingActivity"
             android:exported="false">
         </activity>
+        <activity
+            android:name=".ExpertProfile"
+            android:exported="false">
+        </activity>
 
     </application>
 

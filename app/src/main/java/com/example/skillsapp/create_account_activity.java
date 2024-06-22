@@ -111,7 +111,7 @@ public class create_account_activity extends Activity {
 
 
             // Add a new document with a generated ID
-            db.collection("users").add(userData)
+            db.collection("users").document(user.getUid()).set(userData)
                     .addOnSuccessListener(aVoid -> {
                         Log.d(TAG, "DocumentSnapshot successfully written!");
                         updateUI(user);

@@ -1,6 +1,7 @@
 package com.example.skillsapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +35,13 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         holder.textViewEmail.setText(user.getEmail());
         holder.textViewPhone.setText(user.getPhone());
         holder.textViewDob.setText(user.getDob());
+        holder.itemView.setTag(user.getUid());
+
+        holder.itemView.setOnClickListener(view -> {
+            Intent intent = new Intent(context, ExpertProfile.class);
+            intent.putExtra("USER_UID", user.getUid());
+            context.startActivity(intent);
+        });
     }
 
     @Override
@@ -41,10 +49,14 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         return userList.size();
     }
 
-    public class UserViewHolder extends RecyclerView.ViewHolder {
-        public TextView textViewName, textViewEmail, textViewPhone, textViewDob;
+    public static class UserViewHolder extends RecyclerView.ViewHolder {
 
-        public UserViewHolder(View itemView) {
+        TextView textViewName;
+        TextView textViewEmail;
+        TextView textViewPhone;
+        TextView textViewDob;
+
+        public UserViewHolder(@NonNull View itemView) {
             super(itemView);
             textViewName = itemView.findViewById(R.id.textViewName);
             textViewEmail = itemView.findViewById(R.id.textViewEmail);
