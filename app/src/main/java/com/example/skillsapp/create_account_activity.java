@@ -27,10 +27,18 @@ import java.util.Map;
 public class create_account_activity extends Activity {
     private static final String TAG = "create_account_activity";
 
-    ImageView icon;
+    private ImageView icon;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
-    Animation anim;
+    private Animation anim;
+
+    private EditText emailTextView;
+    private EditText passwordTextView;
+    private EditText nameTextView;
+    private EditText phoneTextView;
+    private EditText dobTextView;
+    private EditText domainTextView;
+    private EditText descriptionTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,24 +47,23 @@ public class create_account_activity extends Activity {
         setContentView(R.layout.create_account_activity);
 
         icon = findViewById(R.id.imageView);
-        anim = AnimationUtils.loadAnimation(create_account_activity.this, R.anim.progressbar_animation);
+        anim = AnimationUtils.loadAnimation(this, R.anim.progressbar_animation);
         icon.startAnimation(anim);
 
         // Initialize Firebase Auth and Firestore
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
+
+        // Initialize EditTexts
+        emailTextView = findViewById(R.id.editTextEmail);
+        passwordTextView = findViewById(R.id.editTextPassword);
+        nameTextView = findViewById(R.id.editTextName);
+        phoneTextView = findViewById(R.id.editTextPhone);
+        dobTextView = findViewById(R.id.editTextDOB);
+        domainTextView = findViewById(R.id.editTextDomain);
+        descriptionTextView = findViewById(R.id.editTextDescription);
     }
-/*
-    @Override
-    public void onStart() {
-        super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if (currentUser != null) {
-            updateUI(currentUser);
-        }
-    }
-*/
+
     private void updateUI(FirebaseUser user) {
         Intent intent = new Intent(create_account_activity.this, HomeActivity.class);
         startActivity(intent);
@@ -65,22 +72,16 @@ public class create_account_activity extends Activity {
 
     public void createUserWithEmailAndPassword(String email, String password) {
         mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(create_account_activity.this, new OnCompleteListener<AuthResult>() {
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             saveUserToFirestore(user);
-                            Intent intent = new Intent(create_account_activity.this, HomeActivity.class);
-                            startActivity(intent);
-                            finish();
                         } else {
-                            // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(create_account_activity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
+                            Toast.makeText(create_account_activity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -88,29 +89,24 @@ public class create_account_activity extends Activity {
 
     private void saveUserToFirestore(FirebaseUser user) {
         if (user != null) {
-
-            EditText passwordTextView = findViewById(R.id.editTextPassword);
-            EditText nameTextView = findViewById(R.id.editTextName);
-            EditText phoneTextView = findViewById(R.id.editTextPhone);
-            EditText dobTextView = findViewById(R.id.editTextDOB);
-
-
+            String email = emailTextView.getText().toString();
             String password = passwordTextView.getText().toString();
             String name = nameTextView.getText().toString();
             String phone = phoneTextView.getText().toString();
             String dob = dobTextView.getText().toString();
+            String domain = domainTextView.getText().toString();
+            String description = descriptionTextView.getText().toString();
 
-            // Create a new user with a first, last name and email
             Map<String, Object> userData = new HashMap<>();
             userData.put("uid", user.getUid());
-            userData.put("email", user.getEmail());
+            userData.put("email", email);
             userData.put("password", password);
             userData.put("name", name);
             userData.put("phone", phone);
             userData.put("dob", dob);
+            userData.put("domain", domain);
+            userData.put("description", description);
 
-
-            // Add a new document with a generated ID
             db.collection("users").document(user.getUid()).set(userData)
                     .addOnSuccessListener(aVoid -> {
                         Log.d(TAG, "DocumentSnapshot successfully written!");
@@ -121,14 +117,9 @@ public class create_account_activity extends Activity {
     }
 
     public void onSubmitButtonClick(View view) {
-        // Retrieve the values from EditTexts
-        EditText emailTextView = findViewById(R.id.editTextEmail);
-        EditText passwordTextView = findViewById(R.id.editTextPassword);
-
         String email = emailTextView.getText().toString();
         String password = passwordTextView.getText().toString();
 
-        // Call the method to create user with email and password
         createUserWithEmailAndPassword(email, password);
     }
 }

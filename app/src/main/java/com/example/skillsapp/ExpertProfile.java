@@ -1,6 +1,5 @@
 package com.example.skillsapp;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,12 +11,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+
 public class ExpertProfile extends AppCompatActivity {
 
     private FirebaseFirestore db;
     private TextView nameTextView;
+    private TextView domainTextView;
     private TextView emailTextView;
     private TextView phoneTextView;
+    private TextView descriptionTextView;
     private String userId;
     private String userName;
 
@@ -27,11 +29,13 @@ public class ExpertProfile extends AppCompatActivity {
         setContentView(R.layout.expert_profile);
 
         nameTextView = findViewById(R.id.nameTextView);
+        domainTextView = findViewById(R.id.domainTextView); // Added domainTextView
         emailTextView = findViewById(R.id.emailTextView);
         phoneTextView = findViewById(R.id.phoneTextView);
+        descriptionTextView = findViewById(R.id.descriptionTextView);
         db = FirebaseFirestore.getInstance();
 
-        // Récupérer l'UID de l'utilisateur passé via l'Intent
+        // Retrieve the UID of the user passed via the Intent
         userId = getIntent().getStringExtra("USER_UID");
         if (userId != null) {
             loadUserProfile();
@@ -45,13 +49,16 @@ public class ExpertProfile extends AppCompatActivity {
                         DocumentSnapshot document = task.getResult();
                         if (document.exists()) {
                             userName = document.getString("name");
+                            String userDomain = document.getString("domain"); // Retrieve domain
                             String userEmail = document.getString("email");
                             String userPhone = document.getString("phone");
-
+                            String userdescription = document.getString("description");
 
                             nameTextView.setText(userName);
+                            domainTextView.setText(userDomain); // Set domain
                             emailTextView.setText(userEmail);
                             phoneTextView.setText(userPhone);
+                            descriptionTextView.setText(userdescription);
                         } else {
                             Log.d("ExpertProfile", "No such document");
                         }
@@ -67,6 +74,4 @@ public class ExpertProfile extends AppCompatActivity {
         intent.putExtra("RECIPIENT_NAME", userName);
         startActivity(intent);
     }
-
 }
-

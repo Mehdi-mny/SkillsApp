@@ -1,0 +1,16 @@
+<resources>
+    <!-- Define the SearchView style -->
+    <style name="CustomSearchView" parent="Widget.AppCompat.SearchView">
+        <item name="queryBackground">@color/white</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textColorHint">#FF79787A</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:iconifiedByDefault">false</item>
+    </style>
+
+    <!-- Define the search text style -->
+    <style name="CustomSearchTextView" parent="Widget.AppCompat.SearchView">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textColorHint">#79787A</item>
+    </style>
+</resources>

@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#797588"
+    android:background="#9E95BD"
     android:gravity="center"
     android:orientation="vertical"
     tools:context=".HomeActivity">
@@ -46,10 +46,14 @@
         </LinearLayout>
         <SearchView
             android:id="@+id/searchView"
-            android:background="@color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:queryHint="Search users" />
+            android:layout_margin="16dp"
+            android:background="@drawable/search_view_background"
+            android:iconifiedByDefault="false"
+            android:queryHint="Search users"
+            android:theme="@style/CustomSearchView" />
+
     </LinearLayout>
 
     <LinearLayout

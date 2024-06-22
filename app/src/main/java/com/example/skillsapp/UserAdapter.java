@@ -5,12 +5,11 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
+
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder> {
 
     private List<User> userList;
@@ -31,16 +30,19 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
     @Override
     public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
         User user = userList.get(position);
-        holder.textViewName.setText(user.getName());
-        holder.textViewEmail.setText(user.getEmail());
-        holder.textViewPhone.setText(user.getPhone());
-        holder.textViewDob.setText(user.getDob());
-        holder.itemView.setTag(user.getUid());
 
-        holder.itemView.setOnClickListener(view -> {
-            Intent intent = new Intent(context, ExpertProfile.class);
-            intent.putExtra("USER_UID", user.getUid());
-            context.startActivity(intent);
+        holder.textViewName.setText(user.getName());
+        holder.textViewDomain.setText(user.getDomain());
+        holder.textViewDescription.setText(user.getDescription());
+
+        // Set a click listener for the item view
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, ExpertProfile.class);
+                intent.putExtra("USER_UID", user.getUid());
+                context.startActivity(intent);
+            }
         });
     }
 
@@ -52,16 +54,14 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
     public static class UserViewHolder extends RecyclerView.ViewHolder {
 
         TextView textViewName;
-        TextView textViewEmail;
-        TextView textViewPhone;
-        TextView textViewDob;
+        TextView textViewDomain;
+        TextView textViewDescription;
 
         public UserViewHolder(@NonNull View itemView) {
             super(itemView);
             textViewName = itemView.findViewById(R.id.textViewName);
-            textViewEmail = itemView.findViewById(R.id.textViewEmail);
-            textViewPhone = itemView.findViewById(R.id.textViewPhone);
-            textViewDob = itemView.findViewById(R.id.textViewDob);
+            textViewDomain = itemView.findViewById(R.id.textViewDomain);
+            textViewDescription = itemView.findViewById(R.id.textViewDescription);
         }
     }
 }

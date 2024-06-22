@@ -44,4 +44,8 @@
     <string name="envoyer">envoyer</string>
     <string name="type_your_message">Type your message...</string>
     <string name="message">message</string>
+    <string name="entrez_votre_domaine">entrez votre domaine</string>
+    <string name="entrez_votre_description">Entrez votre description</string>
+    <string name="description_facultatif">Description (facultatif)</string>
+    <string name="contacter">Contacter</string>
 </resources>
